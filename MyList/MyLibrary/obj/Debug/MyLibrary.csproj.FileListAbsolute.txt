@@ -1,0 +1,10 @@
+E:\5 курс\С#\Проекты\MyLibrary\MyLibrary\bin\Debug\MyLibrary.dll
+E:\5 курс\С#\Проекты\MyLibrary\MyLibrary\bin\Debug\MyLibrary.pdb
+E:\5 курс\С#\Проекты\MyLibrary\MyLibrary\obj\Debug\MyLibrary.dll
+E:\5 курс\С#\Проекты\MyLibrary\MyLibrary\obj\Debug\MyLibrary.pdb
+E:\5 курс\С#\Проекты\MyLibrary\MyLibrary\obj\Debug\MyLibrary.csprojResolveAssemblyReference.cache
+E:\5 курс\С#\Проекты\MyList\MyLibrary\bin\Debug\MyListLibrary.dll
+E:\5 курс\С#\Проекты\MyList\MyLibrary\bin\Debug\MyListLibrary.pdb
+E:\5 курс\С#\Проекты\MyList\MyLibrary\obj\Debug\MyLibrary.csprojResolveAssemblyReference.cache
+E:\5 курс\С#\Проекты\MyList\MyLibrary\obj\Debug\MyListLibrary.dll
+E:\5 курс\С#\Проекты\MyList\MyLibrary\obj\Debug\MyListLibrary.pdb

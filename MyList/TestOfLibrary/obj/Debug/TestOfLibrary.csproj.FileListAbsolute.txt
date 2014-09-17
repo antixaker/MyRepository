@@ -1,0 +1,16 @@
+E:\5 курс\С#\Проекты\TestOfLibrary\TestOfLibrary\bin\Debug\TestOfLibrary.exe.config
+E:\5 курс\С#\Проекты\TestOfLibrary\TestOfLibrary\obj\Debug\TestOfLibrary.csprojResolveAssemblyReference.cache
+E:\5 курс\С#\Проекты\TestOfLibrary\TestOfLibrary\bin\Debug\TestOfLibrary.exe
+E:\5 курс\С#\Проекты\TestOfLibrary\TestOfLibrary\bin\Debug\TestOfLibrary.pdb
+E:\5 курс\С#\Проекты\TestOfLibrary\TestOfLibrary\bin\Debug\MyLibrary.dll
+E:\5 курс\С#\Проекты\TestOfLibrary\TestOfLibrary\bin\Debug\MyLibrary.pdb
+E:\5 курс\С#\Проекты\TestOfLibrary\TestOfLibrary\obj\Debug\TestOfLibrary.exe
+E:\5 курс\С#\Проекты\TestOfLibrary\TestOfLibrary\obj\Debug\TestOfLibrary.pdb
+E:\5 курс\С#\Проекты\MyList\TestOfLibrary\bin\Debug\TestOfLibrary.exe.config
+E:\5 курс\С#\Проекты\MyList\TestOfLibrary\obj\Debug\TestOfLibrary.exe
+E:\5 курс\С#\Проекты\MyList\TestOfLibrary\obj\Debug\TestOfLibrary.pdb
+E:\5 курс\С#\Проекты\MyList\TestOfLibrary\bin\Debug\TestOfLibrary.exe
+E:\5 курс\С#\Проекты\MyList\TestOfLibrary\bin\Debug\TestOfLibrary.pdb
+E:\5 курс\С#\Проекты\MyList\TestOfLibrary\bin\Debug\MyListLibrary.dll
+E:\5 курс\С#\Проекты\MyList\TestOfLibrary\bin\Debug\MyListLibrary.pdb
+E:\5 курс\С#\Проекты\MyList\TestOfLibrary\obj\Debug\TestOfLibrary.csprojResolveAssemblyReference.cache
