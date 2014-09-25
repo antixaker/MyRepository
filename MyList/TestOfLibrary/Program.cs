@@ -19,12 +19,7 @@ namespace TestOfLibrary
             test.Add(9);
             test.Add(10);
             test.Add(11);
-            /*
-            foreach (var item in test)
-            {
-                Console.WriteLine(item);
-            }
-             */
+
             while (test.MoveNext())
             {
                 Console.WriteLine(test.Current);

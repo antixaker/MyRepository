@@ -22,17 +22,15 @@ namespace MyLibrary
 
         public int Add(object value)
         {
-            try
-            {
-                objList[counterOfAdd] = value;
-            }
-            catch (IndexOutOfRangeException)
+            if (counterOfAdd == this.Lenght)
             {
                 Resize();
                 objList[counterOfAdd] = value;
+                counterOfAdd++;
             }
-            finally
+            else
             {
+                objList[counterOfAdd] = value;
                 counterOfAdd++;
             }
             return 0;
@@ -94,15 +92,7 @@ namespace MyLibrary
 
         public void Insert(int index, object value)
         {
-            try
-            {
-                objList[index] = value;
-            }
-            catch (Exception e)
-            {
-
-                Console.WriteLine(e.Message);
-            }
+            objList[index] = value;
         }
 
         public bool IsFixedSize
@@ -187,12 +177,12 @@ namespace MyLibrary
 
         public bool IsSynchronized
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         public object SyncRoot
         {
-            get { throw new NotImplementedException(); }
+            get { return null; }
         }
 
         public IEnumerator GetEnumerator()
