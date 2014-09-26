@@ -1,16 +1,21 @@
-﻿using System;
+﻿#region Using
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 
+#endregion
+
 
 namespace MyLibrary
 {
     public class MyList : IList, IEnumerator
     {
-        //коммент
+        #region Variables
+
         const int arrayZeroSize = 0;
 
         object[] objList = new object[arrayZeroSize];
@@ -19,6 +24,75 @@ namespace MyLibrary
         int counterOfAdd = 0;
         int counterOfRealElem = 0;
         int position = -1;
+
+        #endregion
+
+        #region Properties
+
+        public int Count
+        {
+            get
+            {
+                counterOfRealElem = 0;
+                foreach (var item in objList)
+                {
+                    if (item != null)
+                    {
+                        counterOfRealElem++;
+                    }
+                }
+                return counterOfRealElem;
+            }
+        }
+
+        public int Lenght
+        {
+            get
+            {
+                return objList.Length;
+            }
+        }
+
+
+        public object this[int index]
+        {
+            get
+            {
+                return objList[index];
+            }
+            set
+            {
+                objList[index] = value;
+            }
+        }
+
+        #region NoUsedProperties
+
+        public bool IsSynchronized
+        {
+            get { return false; }
+        }
+
+        public object SyncRoot
+        {
+            get { return null; }
+        }
+
+        public bool IsFixedSize
+        {
+            get { return true; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Methods
 
         public int Add(object value)
         {
@@ -95,15 +169,7 @@ namespace MyLibrary
             objList[index] = value;
         }
 
-        public bool IsFixedSize
-        {
-            get { return true; }
-        }
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
 
         public void Remove(object value)
         {
@@ -131,17 +197,7 @@ namespace MyLibrary
             objList[Count - 1] = null;
         }
 
-        public object this[int index]
-        {
-            get
-            {
-                return objList[index];
-            }
-            set
-            {
-                objList[index] = value;
-            }
-        }
+
 
         public void CopyTo(Array array, int index)
         {
@@ -151,39 +207,9 @@ namespace MyLibrary
             }
         }
 
-        public int Count
-        {
-            get
-            {
-                counterOfRealElem = 0;
-                foreach (var item in objList)
-                {
-                    if (item != null)
-                    {
-                        counterOfRealElem++;
-                    }
-                }
-                return counterOfRealElem;
-            }
-        }
+        #endregion
 
-        public int Lenght
-        {
-            get
-            {
-                return objList.Length;
-            }
-        }
-
-        public bool IsSynchronized
-        {
-            get { return false; }
-        }
-
-        public object SyncRoot
-        {
-            get { return null; }
-        }
+        #region IEnumerator
 
         public IEnumerator GetEnumerator()
         {
@@ -205,5 +231,7 @@ namespace MyLibrary
         {
             position = -1;
         }
+
+        #endregion
     }
 }
