@@ -8,20 +8,10 @@ namespace MyGeneric
 {
     public class MyList<T> : IList<T>
     {
-        #region Variables
-
-        const int arrayZeroSize = 0;
-
-        T[] genericList = new T[arrayZeroSize];
-
-        int counterOfResize = 2;
-        int counterOfAdd = 0;
-        int counterOfRealElem = 0;
-        //int position = -1;
-
-        #endregion
 
         #region Properties
+
+        const int arrayZeroSize = 0;
 
         public int Count
         {
@@ -64,6 +54,12 @@ namespace MyGeneric
             }
         }
 
+        T[] genericList = new T[arrayZeroSize];
+
+        int counterOfResize = 2;
+        int counterOfAdd ;
+        int counterOfRealElem ;
+
         #endregion
 
         #region Methods
@@ -72,16 +68,9 @@ namespace MyGeneric
         {
             for (int i = 0; i < genericList.Length; i++)
             {
-                try
+                if (genericList[i].Equals(item))
                 {
-                    if (genericList[i].Equals(item))
-                    {
-                        return i;
-                    }
-                }
-                catch (NullReferenceException)
-                {
-                    return -1;
+                    return i;
                 }
             }
             return -1;

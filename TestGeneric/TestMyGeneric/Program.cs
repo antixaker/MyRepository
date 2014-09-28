@@ -12,7 +12,7 @@ namespace TestMyGeneric
         static void Main(string[] args)
         {
             MyList<int> generic_int = new MyList<int>();
-            generic_int.Add(1);
+            generic_int.Add(-1);
             generic_int.Add(2);
             generic_int.Add(3);
 
@@ -29,6 +29,14 @@ namespace TestMyGeneric
             }
             Console.WriteLine("Друкуемо два:");
             foreach (var item in genfloat)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine(generic_int.IndexOf(2));
+            generic_int.Remove(2);
+            Console.WriteLine(generic_int.IndexOf(2));
+            Console.WriteLine("Писля удаления:");
+            foreach (var item in generic_int)
             {
                 Console.WriteLine(item);
             }
