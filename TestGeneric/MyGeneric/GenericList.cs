@@ -175,8 +175,7 @@ namespace MyGeneric
 
         public IEnumerator<T> GetEnumerator()
         {
-            Numerator temp = new Numerator(this);
-            return (IEnumerator<T>)(temp);
+            return (IEnumerator<T>)(new Numerator(this));
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
