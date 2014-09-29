@@ -175,7 +175,7 @@ namespace MyGeneric
 
         public IEnumerator<T> GetEnumerator()
         {
-            return (IEnumerator<T>)(new Numerator(this));
+            return (IEnumerator<T>)(new MyList_ENumerator(this));
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -183,12 +183,12 @@ namespace MyGeneric
             return null;
         }
 
-        class Numerator : IEnumerator<T>
+        class MyList_ENumerator : IEnumerator<T>
         {
             MyList<T> exempBase;
             int numerator_position = -1;
 
-            public Numerator(MyList<T> got)
+            public MyList_ENumerator(MyList<T> got)
             {
                 exempBase = got; //Reset();
             }
