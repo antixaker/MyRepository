@@ -11,14 +11,12 @@ namespace MyLinkedList
     public class Node<T>
     {
         public T Value;
-        public Node<T> Next = null;
-        public Node<T> Prev = null;
+        public Node<T> Next;
+        public Node<T> Prev;
 
         public Node()
         {
             this.Value = default(T);
-            this.Next = null;
-            this.Prev = null;
         }
 
         public Node(T _node)
@@ -32,67 +30,61 @@ namespace MyLinkedList
 
         #region Property
 
-        Node<T> _first;
-        Node<T> _last;
+        Node<T> first;
+        Node<T> last;
         Node<T> curr;
 
-        int size;
+        int count;
 
         public Node<T> First
         {
-            get { return _first; }
+            get { return first; }
         }
 
         public Node<T> Last
         {
-            get { return _last; }
+            get { return last; }
         }
 
         public int Count
         {
-            get { return size; }
+            get { return count; }
         }
 
         #endregion
 
         #region Methods
 
-        public OwnLinkedList()
-        {
-            _first = _last = curr = null;
-            size = 0;
-        }
-
         public void AddFirst(T nod)
         {
             Node<T> newnod = new Node<T>(nod);
-            if (_first == null)
+            if (first == null)
             {
-                _first = _last = newnod;
+                first = last = newnod;
             }
             else
             {
-                newnod.Next = _first;
-                _first = newnod;
-                newnod.Next.Prev = _first;
+                newnod.Next = first;
+                first = newnod;
+                newnod.Next.Prev = first;
             }
-            size++;
+            count++;
         }
 
         public void AddLast(T nod)
         {
             Node<T> newnod = new Node<T>(nod);
-            if (_last == null)
+            if (last == null)
             {
-                _last = _first = newnod;
+                last = first = newnod;
             }
             else
             {
-                newnod.Prev = _last;
-                _last.Next = newnod;
-                _last = newnod;
+                newnod.Prev = last;
+                last.Next = newnod;
+                last = newnod;
             }
-            size++;
+            count++;
         }
 
         public Node<T> Find(T value)
@@ -111,8 +103,8 @@ namespace MyLinkedList
 
         public void Clear()
         {
-            _first = _last = curr = null;
-            size = 0;
+            first = last = curr = null;
+            count = 0;
         }
 
         public bool Remove(T value)
@@ -124,7 +116,7 @@ namespace MyLinkedList
                 {
                     curr.Next.Prev = curr.Prev;
                     curr.Prev.Next = curr.Next;
-                    size--;
+                    count--;
                     return true;
                 }
                 curr = curr.Next;
@@ -134,11 +126,11 @@ namespace MyLinkedList
 
         public bool RemoveFirst()
         {
-            if (_first != null)
+            if (first != null)
             {
-                _first.Next.Prev = null;
-                _first = _first.Next;
-                size--;
+                first.Next.Prev = null;
+                first = first.Next;
+                count--;
                 return true;
 
             }
@@ -147,11 +139,11 @@ namespace MyLinkedList
 
         public bool RemoveLast()
         {
-            if (_last != null)
+            if (last != null)
             {
-                _last.Prev.Next = null;
-                _last = _last.Prev;
-                size--;
+                last.Prev.Next = null;
+                last = last.Prev;
+                count--;
                 return true;
 
             }
@@ -172,26 +164,10 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
-        #endregion
-
         public class OwnLinkedList_numerator : IEnumerator<Node<T>>
         {
 
 
-            //public object Current
-            //{
-            //    get { throw new NotImplementedException(); }
-            //}
-
-            //public bool MoveNext()
-            //{
-            //    throw new NotImplementedException();
-            //}
-
-            //public void Reset()
-            //{
-            //    throw new NotImplementedException();
-            //}
             OwnLinkedList<T> exemp;
             Node<T> current;
             public OwnLinkedList_numerator(OwnLinkedList<T> got)
@@ -216,9 +192,9 @@ namespace MyLinkedList
 
             public bool MoveNext()
             {
-                if (exemp._first.Next != null)
+                if (exemp.first.Next != null)
                 {
-                    current = exemp._first = exemp._first.Next;
+                    current = exemp.first = exemp.first.Next;
                     return true;
                 }
                 return false;
@@ -229,5 +205,9 @@ namespace MyLinkedList
                 current = exemp.First;
             }
         }
+
+
+        #endregion
+
     }
 }
