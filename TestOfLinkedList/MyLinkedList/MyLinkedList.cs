@@ -30,27 +30,25 @@ namespace MyLinkedList
 
         #region Property
 
-        Node<T> first;
-        Node<T> last;
-        Node<T> curr;
-
-        int count;
-
         public Node<T> First
         {
             get { return first; }
         }
+        Node<T> first;
 
         public Node<T> Last
         {
             get { return last; }
         }
+        Node<T> last;
 
         public int Count
         {
             get { return count; }
         }
+        int count;
 
+        Node<T> curr;
         #endregion
 
         #region Methods
