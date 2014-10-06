@@ -108,18 +108,31 @@ namespace MyLinkedList
         public bool Remove(T value)
         {
             curr = First;
-            while (curr != null)
+            if (First.Value.Equals(value))
             {
-                if (curr.Value.Equals(value))
-                {
-                    curr.Next.Prev = curr.Prev;
-                    curr.Prev.Next = curr.Next;
-                    count--;
-                    return true;
-                }
-                curr = curr.Next;
+                RemoveFirst();
+                return true;
             }
-            return false;
+            else if (Last.Value.Equals(value))
+            {
+                RemoveLast();
+                return true;     
+            }
+            else
+            {
+                while (curr != null)
+                {
+                    if (curr.Value.Equals(value))
+                    {
+                        curr.Next.Prev = curr.Prev;
+                        curr.Prev.Next = curr.Next;
+                        count--;
+                        return true;
+                    }
+                    curr = curr.Next;
+                }
+                return false;
+            }
         }
 
         public bool RemoveFirst()
