@@ -162,20 +162,19 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
-        public class OwnLinkedList_numerator : IEnumerator<Node<T>>
+        public class OwnLinkedList_numerator : IEnumerator<T>
         {
-
-
             OwnLinkedList<T> exemp;
             Node<T> current;
+
             public OwnLinkedList_numerator(OwnLinkedList<T> got)
             {
                 exemp = got;
             }
 
-            public Node<T> Current
+            public T Current
             {
-                get { return current; }
+                get { return current.Value; }
             }
 
             public void Dispose()
@@ -190,17 +189,29 @@ namespace MyLinkedList
 
             public bool MoveNext()
             {
-                if (exemp.first.Next != null)
+                if (current==null)
                 {
-                    current = exemp.first = exemp.first.Next;
-                    return true;
+                    if (exemp.First!=null)
+                    {
+                        current = exemp.First;
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
+                else
+                {
+                    if (current.Next!=null)
+                    {
+                        current = current.Next;
+                        return true;
+                    }
+                    return false;
+                }
             }
 
             public void Reset()
             {
-                current = exemp.First;
+                current = null;
             }
         }
 

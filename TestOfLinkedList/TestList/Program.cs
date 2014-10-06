@@ -20,11 +20,14 @@ namespace TestList
            // doublelist.Remove(2);
             doublelist.RemoveFirst();
             doublelist.RemoveLast();
-            //foreach ( Node<int> item in doublelist)
-            //{
-            //    Console.WriteLine(item.Value);  
-            //}
-
+            foreach (int item in doublelist)
+            {
+                Console.WriteLine(item);
+            }
+            foreach (int item in doublelist)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
