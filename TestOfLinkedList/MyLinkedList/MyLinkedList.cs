@@ -39,6 +39,7 @@ namespace MyLinkedList
         public void AddFirst(T nod)
         {
             Node<T> newnod = new Node<T>(nod);
+
             if (first == null)
             {
                 first = last = newnod;
@@ -55,6 +56,7 @@ namespace MyLinkedList
         public void AddLast(T nod)
         {
             Node<T> newnod = new Node<T>(nod);
+
             if (last == null)
             {
                 last = first = newnod;
@@ -71,6 +73,7 @@ namespace MyLinkedList
         public Node<T> Find(T value)
         {
             curr = First;
+
             while (curr != null)
             {
                 if (curr.Value.Equals(value))
@@ -91,6 +94,7 @@ namespace MyLinkedList
         public bool Remove(T value)
         {
             curr = First;
+
             if (First.Value.Equals(value))
             {
                 RemoveFirst();
@@ -126,9 +130,9 @@ namespace MyLinkedList
                 first = first.Next;
                 count--;
                 return true;
-
             }
-            else return false;
+            else 
+                return false;
         }
 
         public bool RemoveLast()
@@ -139,9 +143,9 @@ namespace MyLinkedList
                 last = last.Prev;
                 count--;
                 return true;
-
             }
-            else return false;
+            else 
+                return false;
         }
 
         #endregion
@@ -224,9 +228,9 @@ namespace MyLinkedList
         public Node<T> Next;
         public Node<T> Prev;
 
-        public Node(T _node=default(T))
+        public Node(T value=default(T))
         {
-            this.Value = _node;
+            this.Value = value;
         }
     }
 
