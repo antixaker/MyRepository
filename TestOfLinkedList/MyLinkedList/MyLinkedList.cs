@@ -216,21 +216,20 @@ namespace MyLinkedList
 
     }
 
+    #region Utils
+
     public class Node<T>
     {
         public T Value;
         public Node<T> Next;
         public Node<T> Prev;
 
-        public Node()
-        {
-            this.Value = default(T);
-        }
-
-        public Node(T _node)
+        public Node(T _node=default(T))
         {
             this.Value = _node;
         }
     }
+
+    #endregion
 
 }
