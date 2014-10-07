@@ -8,23 +8,6 @@ using System.Threading.Tasks;
 
 namespace MyLinkedList
 {
-    public class Node<T>
-    {
-        public T Value;
-        public Node<T> Next;
-        public Node<T> Prev;
-
-        public Node()
-        {
-            this.Value = default(T);
-        }
-
-        public Node(T _node)
-        {
-            this.Value = _node;
-        }
-    }
-
     public class OwnLinkedList<T> : IEnumerable<T>
     {
 
@@ -232,4 +215,22 @@ namespace MyLinkedList
         #endregion
 
     }
+
+    public class Node<T>
+    {
+        public T Value;
+        public Node<T> Next;
+        public Node<T> Prev;
+
+        public Node()
+        {
+            this.Value = default(T);
+        }
+
+        public Node(T _node)
+        {
+            this.Value = _node;
+        }
+    }
+
 }
