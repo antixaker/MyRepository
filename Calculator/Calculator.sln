@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO", "Calculator\IO.csproj", "{3C2574D1-6EA6-4463-B3C5-E96667261103}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arithmetic", "Arithmetic\Arithmetic.csproj", "{1C4B1A00-234D-4F69-A0B3-E00984E4BFDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryTree", "BinaryTree\BinaryTree.csproj", "{B21C425A-683B-481A-A483-51140A2CE7EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C2574D1-6EA6-4463-B3C5-E96667261103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C2574D1-6EA6-4463-B3C5-E96667261103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C2574D1-6EA6-4463-B3C5-E96667261103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C2574D1-6EA6-4463-B3C5-E96667261103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C4B1A00-234D-4F69-A0B3-E00984E4BFDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C4B1A00-234D-4F69-A0B3-E00984E4BFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C4B1A00-234D-4F69-A0B3-E00984E4BFDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C4B1A00-234D-4F69-A0B3-E00984E4BFDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B21C425A-683B-481A-A483-51140A2CE7EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B21C425A-683B-481A-A483-51140A2CE7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B21C425A-683B-481A-A483-51140A2CE7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B21C425A-683B-481A-A483-51140A2CE7EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
