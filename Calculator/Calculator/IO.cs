@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BinaryTree;
+using System.Globalization;
 
 namespace Calculator
 {
@@ -11,9 +12,10 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            BinTree tree = new BinTree();
-            string input =  Console.ReadLine();
-            Parsing.Parse(input, tree);
+            BinTree tree;
+            string input = Console.ReadLine();
+            tree = Parsing.Parse(input);
+           // Console.WriteLine(NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
 
         }
     }
