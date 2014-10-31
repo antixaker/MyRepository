@@ -37,11 +37,11 @@ namespace BinaryTree
             Current = Root = null;
         }
         object last;
-        public void AddToTree(object obj, bool isdigit = true)
+        public void AddToTree(object obj, bool isdigit = true, int brackets = 0)
         {
             if (isdigit)
             {
-                
+
                 if (this.Current == null)
                 {
                     Current = new Node();
@@ -57,22 +57,45 @@ namespace BinaryTree
 
                 else
                 {
-                    if (this.Current.Left == null)
+                    if (obj is BinaryTree.Node)
                     {
-                        Current.Left = new Node(obj);//Convert.ToDouble(obj));
-                    }
+                        if (this.Current.Left == null)
+                        {
+                            Current.Left = (Node)obj;
+                        }
 
-                    else if (this.Current.Right == null)
-                    {
-                        this.Current.Right = new Node(obj);//Convert.ToDouble(obj));
-                    }
+                        else if (this.Current.Right == null)
+                        {
+                            this.Current.Right = (Node)obj;
+                        }
 
+                        else
+                        {
+                            Node newnode = new Node(obj);
+                            newnode.Left = Current;
+                            Current = newnode;
+                        }
+                    }
                     else
                     {
-                        Node newnode = new Node(obj);
-                        newnode.Left = Current;
-                        Current = newnode;
+                        if (this.Current.Left == null)
+                        {
+                            Current.Left = new Node(obj);//Convert.ToDouble(obj));
+                        }
+
+                        else if (this.Current.Right == null)
+                        {
+                            this.Current.Right = new Node(obj);//Convert.ToDouble(obj));
+                        }
+
+                        else
+                        {
+                            Node newnode = new Node(obj);
+                            newnode.Left = Current;
+                            Current = newnode;
+                        }
                     }
+
                 }
                 if (last != null)
                 {
@@ -104,6 +127,10 @@ namespace BinaryTree
                         newnode.Left = this.Current;
                         this.Current = newnode;
                     }
+                    //if (brackets == 0)
+                    //{
+
+                    //}
                     Root = Current;
                 }
                 else if (obj.Equals("*") || obj.Equals("/") || obj.Equals("%"))
@@ -123,7 +150,10 @@ namespace BinaryTree
                         Node newnode = new Node(obj);
                         newnode.Left = new Node(Current.Right.Value);
                         this.Current.Right = newnode;
-                        Root = Current;
+                        if (brackets == 0)
+                        {
+                            Root = Current;
+                        }
                         this.Current = newnode;
                     }
                 }
@@ -145,32 +175,37 @@ namespace BinaryTree
         {
             BinTree tree = new BinTree();
             string substring;
-            int counter = 0, counterOfBrackets=0;
+            int counter = 0, counterOfBrackets = 0;
             bool isDecimalSeparator;
             for (int i = 0; i < str.Length; i++)
             {
                 isDecimalSeparator = false;
 
-                if (str[i]=='(')
+                if (str[i] == '(')
                 {
+                    counter = 0;
                     counterOfBrackets++;
-                    while (counterOfBrackets>0)
+                    while (counterOfBrackets > 0)
                     {
                         i++;
-                        if (str[i]==')')
+                        if (i >= str.Length)
+                        {
+                            break;
+                        }
+                        if (str[i] == ')')
                         {
                             counterOfBrackets--;
                         }
-                        else if (str[i]=='(')
+                        else if (str[i] == '(')
                         {
                             counterOfBrackets++;
                         }
                         counter++;
                     }
                     //i--;
-                    substring = str.Substring(i - counter+1, counter-1);
+                    substring = str.Substring(i - counter + 1, counter - 1);
                     BinTree tmpTree = Parse(substring);
-                    tree.AddToTree(tmpTree.Root);
+                    tree.AddToTree(tmpTree.Root, true, 1);
                     //i += 2;
                     continue;
                 }
@@ -204,6 +239,10 @@ namespace BinaryTree
                     {
                         counter++;
                         i++;
+                        if (str[i] == '(' | str[i] == ')')
+                        {
+                            break;
+                        }
                     }
                     substring = str.Substring(i - counter, counter);
                     tree.AddToTree(WhatTypeOfObject(substring, isDecimalSeparator), false);
@@ -250,21 +289,6 @@ namespace BinaryTree
                     int number = Convert.ToInt32(obj);
                     return number;
                 }
-                //try
-                //{
-                //    int number = Convert.ToInt32(obj);
-                //    return number;
-                //}
-                //catch (System.OverflowException)
-                //{
-                //    BigInteger bint = BigInteger.Parse(obj.ToString());
-                //    return bint;
-                //}
-                //catch (System.FormatException)
-                //{
-                //    Console.WriteLine("бля!");
-                //    return obj;
-                //}
             }
 
         }
