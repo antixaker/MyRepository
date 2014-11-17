@@ -12,14 +12,14 @@ using System.Drawing.Drawing2D;
 
 namespace FirstGraphics
 {
-    public partial class Form1 : Form
+    public partial class Main_form : Form
     {
-        #region Variables
+        #region Properties
 
-        Form2 form2 = new Form2();
+        NewImage_form form2 = new NewImage_form();
         Pen pen = new Pen(Color.Black);
         Point startPt;
-        int mode;
+        int indexOfRadioButton;
         Point movePt;
         Point nullPt = new Point(int.MaxValue, 0);
         SolidBrush brush = new SolidBrush(Color.White);
@@ -30,12 +30,9 @@ namespace FirstGraphics
 
         #endregion
 
-        public Form1()
+        public Main_form()
         {
             InitializeComponent();
-
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            this.SetStyle(ControlStyles.DoubleBuffer, true);
 
             AddOwnedForm(form2);
             openFileDialog1.InitialDirectory = saveFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
@@ -46,36 +43,10 @@ namespace FirstGraphics
             pen.Alignment = PenAlignment.Inset;
             oldImage = new Bitmap(draw_area.Image);
             font = Font.Clone() as Font;
-            comboBox1.SelectedIndex = 0;
+            type_line_comboBox.SelectedIndex = 0;
             this.DoubleBuffered = true;
             EnableDoubleBuffering();
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
-                          ControlStyles.UserPaint |
-                          ControlStyles.OptimizedDoubleBuffer |
-                          ControlStyles.ResizeRedraw, true);
         }
-
-        #region Misc
-
-        public void EnableDoubleBuffering()
-        {
-            // Set the value of the double-buffering style bits to true.
-            this.SetStyle(ControlStyles.DoubleBuffer |
-               ControlStyles.UserPaint |
-               ControlStyles.AllPaintingInWmPaint,
-               true);
-            this.UpdateStyles();
-        }
-
-        Color InvertMeAColour(Color ColourToInvert)
-        {
-            const int RGBMAX = 255;
-
-            return Color.FromArgb(RGBMAX - ColourToInvert.R,
-              RGBMAX - ColourToInvert.G, RGBMAX - ColourToInvert.B);
-        }
-
-        #endregion
 
         #region Painting
 
@@ -85,7 +56,7 @@ namespace FirstGraphics
             Point p1 = draw_area.PointToScreen(startPt),
                 p2 = draw_area.PointToScreen(movePt);
             //p2 = pt;
-            if (mode == 1)
+            if (indexOfRadioButton == 1)
             {
                 //Graphics g = Graphics.FromImage(draw_area.Image);
                 //Pen pen = new Pen(Color.Black);
@@ -106,12 +77,12 @@ namespace FirstGraphics
             switch (figureMode)
             {
                 case 0:
-                    if (!checkBox1.Checked)
+                    if (!transparent_mode.Checked)
                         g.FillRectangle(brush, r);
                     g.DrawRectangle(pen, r);
                     break;
                 case 1:
-                    if (!checkBox1.Checked)
+                    if (!transparent_mode.Checked)
                         g.FillEllipse(brush, r);
                     g.DrawEllipse(pen, r);
                     break;
@@ -142,14 +113,14 @@ namespace FirstGraphics
             oldImage.Dispose();
             oldImage = new Bitmap(draw_area.Image);
         }
-       
+
         private void draw_area_MouseMove(object sender, MouseEventArgs e)
         {
             label1.Text = string.Format("X,Y:{0},{1}", e.X, e.Y);
             if (startPt == nullPt)
                 return;
             if (e.Button == MouseButtons.Left)
-                switch (mode)
+                switch (indexOfRadioButton)
                 {
                     case 0:
                         Graphics g = Graphics.FromImage(draw_area.Image);
@@ -166,6 +137,8 @@ namespace FirstGraphics
                     case 2:
                         //EnableDoubleBuffering();
                         ReversibleDraw();
+                        //draw_area.Refresh();
+
                         movePt = e.Location;
                         //movePt = new Point(e.X, e.Y);
                         equalSize = Control.ModifierKeys == Keys.Control;
@@ -189,11 +162,11 @@ namespace FirstGraphics
                     fill_color.BackColor = c;
             }
             else
-                if (mode == 3)
+                if (indexOfRadioButton == 3)
                 {
                     Graphics g = Graphics.FromImage(draw_area.Image);
                     using (SolidBrush b = new SolidBrush(pen.Color))
-                        g.DrawString(textBox1.Text, font, b, e.Location);
+                        g.DrawString(text_to_draw.Text, font, b, e.Location);
                     g.Dispose();
                     draw_area.Invalidate();
                 }
@@ -203,10 +176,10 @@ namespace FirstGraphics
         {
             if (startPt == nullPt)
                 return;
-            if (mode >= 1)
+            if (indexOfRadioButton >= 1)
             {
                 Graphics g = Graphics.FromImage(draw_area.Image);
-                switch (mode)
+                switch (indexOfRadioButton)
                 {
                     case 1:
                         g.DrawLine(pen, startPt, movePt);
@@ -322,9 +295,9 @@ namespace FirstGraphics
 
         #region Drawing settings
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void line_thickness_UpDown_ValueChanged(object sender, EventArgs e)
         {
-            pen.Width = (int)numericUpDown1.Value;
+            pen.Width = (int)line_thickness_UpDown.Value;
             figure_mode.Invalidate();
         }
 
@@ -333,7 +306,7 @@ namespace FirstGraphics
             RadioButton rb = sender as RadioButton;
             if (!rb.Checked)
                 return;
-            mode = rb.TabIndex;
+            indexOfRadioButton = rb.TabIndex;
         }
 
         private void figure_mode_Paint(object sender, PaintEventArgs e)
@@ -351,12 +324,12 @@ namespace FirstGraphics
             figure_mode.Invalidate();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void transparent_mode_CheckedChanged(object sender, EventArgs e)
         {
             figure_mode.Invalidate();
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void Main_form_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
@@ -365,7 +338,7 @@ namespace FirstGraphics
             }
         }
 
-        private void textBox1_Enter(object sender, EventArgs e)
+        private void text_to_draw_Enter(object sender, EventArgs e)
         {
             radioButton4.Checked = true;
         }
@@ -375,11 +348,11 @@ namespace FirstGraphics
             fontDialog1.Font = font;
             if (fontDialog1.ShowDialog() == DialogResult.OK)
             {
-                textBox1.Font = font = fontDialog1.Font;
+                text_to_draw.Font = font = fontDialog1.Font;
             }
         }
 
-        private void comboBox1_DrawItem(object sender, DrawItemEventArgs e)
+        private void type_line_comboBox_DrawItem(object sender, DrawItemEventArgs e)
         {
             e.DrawBackground();
             using (Pen p = new Pen(e.ForeColor, 2))
@@ -392,10 +365,35 @@ namespace FirstGraphics
 
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void type_line_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pen.DashStyle = (DashStyle)comboBox1.SelectedIndex;
+            pen.DashStyle = (DashStyle)type_line_comboBox.SelectedIndex;
             figure_mode.Invalidate();
+        }
+
+        #endregion
+
+        #region Misc
+
+        public void EnableDoubleBuffering()
+        {
+            // Set the value of the double-buffering style bits to true.
+            this.SetStyle(
+               ControlStyles.DoubleBuffer |
+               ControlStyles.UserPaint |
+               ControlStyles.AllPaintingInWmPaint |
+               ControlStyles.OptimizedDoubleBuffer |
+               ControlStyles.ResizeRedraw,
+               true);
+            this.UpdateStyles();
+        }
+
+        Color InvertMeAColour(Color ColourToInvert)
+        {
+            const int RGBMAX = 255;
+
+            return Color.FromArgb(RGBMAX - ColourToInvert.R,
+              RGBMAX - ColourToInvert.G, RGBMAX - ColourToInvert.B);
         }
 
         #endregion

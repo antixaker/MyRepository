@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FirstGraphics
 {
-    public partial class Form2 : Form
+    public partial class NewImage_form : Form
     {
-        public Form2()
+        public NewImage_form()
         {
             InitializeComponent();
         }
@@ -25,7 +25,7 @@ namespace FirstGraphics
             Graphics g = Graphics.FromImage(im);
             g.Clear(Color.White);
             g.Dispose();
-            PictureBox p = Owner.Controls["panel1"].Controls["pictureBox1"] as PictureBox;
+            PictureBox p = Owner.Controls["panel1"].Controls["draw_area"] as PictureBox;
             if (p.Image != null)
                 p.Image.Dispose();
             p.Image = im;

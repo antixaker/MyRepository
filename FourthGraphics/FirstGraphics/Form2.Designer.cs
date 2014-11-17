@@ -1,6 +1,6 @@
 ﻿namespace FirstGraphics
 {
-    partial class Form2
+    partial class NewImage_form
     {
         /// <summary>
         /// Required designer variable.
@@ -47,7 +47,7 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Width";
             // 
-            // line_color
+            // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(40, 75);
@@ -56,7 +56,7 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Height";
             // 
-            // numericUpDown1
+            // line_thickness_UpDown
             // 
             this.numericUpDown1.Increment = new decimal(new int[] {
             10,
@@ -121,7 +121,7 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button_font
+            // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Location = new System.Drawing.Point(171, 128);
@@ -132,7 +132,7 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // Form2
+            // NewImage_form
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -148,7 +148,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form2";
+            this.Name = "NewImage_form";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "New Image";
