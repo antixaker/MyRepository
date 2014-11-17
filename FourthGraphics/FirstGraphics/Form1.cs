@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Drawing2D;
+using System.Threading;
 
 namespace FirstGraphics
 {
@@ -16,7 +17,7 @@ namespace FirstGraphics
     {
         #region Properties
 
-        NewImage_form form2 = new NewImage_form();
+        NewImage_form newImageForm = new NewImage_form();
         Pen pen = new Pen(Color.Black);
         Point startPt;
         int indexOfRadioButton;
@@ -34,25 +35,29 @@ namespace FirstGraphics
         {
             InitializeComponent();
 
-            AddOwnedForm(form2);
+            AddOwnedForm(newImageForm);
             openFileDialog1.InitialDirectory = saveFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
-            form2.numericUpDown1.Value = panel1.ClientSize.Width;
-            form2.numericUpDown2.Value = panel1.ClientSize.Height;
-            form2.button1_Click(this, null);
+            newImageForm.numericUpDown1.Value = panel1.ClientSize.Width;
+            newImageForm.numericUpDown2.Value = panel1.ClientSize.Height;
+            newImageForm.button1_Click(this, null);
             pen.StartCap = pen.EndCap = LineCap.Round;
             pen.Alignment = PenAlignment.Inset;
             oldImage = new Bitmap(draw_area.Image);
             font = Font.Clone() as Font;
             type_line_comboBox.SelectedIndex = 0;
             this.DoubleBuffered = true;
-            EnableDoubleBuffering();
+            //EnableDoubleBuffering();
+            //this.SuspendLayout();
+            //this.ResumeLayout(true);
         }
 
         #region Painting
 
+        //Drawing inverted line or frame on draw_area
+        //when pressed left button and mouse is moving
         private void ReversibleDraw()
         {
-
+            //EnableDoubleBuffering();
             Point p1 = draw_area.PointToScreen(startPt),
                 p2 = draw_area.PointToScreen(movePt);
             //p2 = pt;
@@ -71,6 +76,7 @@ namespace FirstGraphics
                 ControlPaint.DrawReversibleFrame(PtToRect(p1, p2), Color.Black, (FrameStyle)((figureMode + 1) % 2));
         }
 
+        //Drawing figure on draw_area
         private void DrawFigure(Rectangle r, Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -90,6 +96,7 @@ namespace FirstGraphics
 
         }
 
+        //Method that converting two points to rectangle
         private Rectangle PtToRect(Point p1, Point p2)
         {
             if (equalSize)
@@ -108,6 +115,7 @@ namespace FirstGraphics
 
         }
 
+        //Creating backup of current picture at draw_area
         private void UpdateOldImage()
         {
             oldImage.Dispose();
@@ -135,6 +143,8 @@ namespace FirstGraphics
                     //ReversibleDraw();
                     //break;
                     case 2:
+                        if (false)
+                        {
                         //EnableDoubleBuffering();
                         ReversibleDraw();
                         //draw_area.Refresh();
@@ -145,8 +155,20 @@ namespace FirstGraphics
                         ReversibleDraw();
                         //draw_area.Invalidate();
                         //draw_area.Refresh();
+                        }
+                        //Graphics 
+                        Bitmap b = new Bitmap(draw_area.Width,draw_area.Height);
+                            g = Graphics.FromImage(b);
+                        movePt = e.Location;
+                        g.DrawRectangle(pen,PtToRect(startPt,movePt));// DrawLine(pen, startPt, e.Location);
+                        g.Dispose();
+                        draw_area.Image=b;
+                        //startPt = e.Location;
+                        //draw_area.Refresh();
+                        draw_area.Invalidate();
                         break;
                 }
+
         }
 
         private void draw_area_MouseDown(object sender, MouseEventArgs e)
@@ -164,6 +186,7 @@ namespace FirstGraphics
             else
                 if (indexOfRadioButton == 3)
                 {
+                    
                     Graphics g = Graphics.FromImage(draw_area.Image);
                     using (SolidBrush b = new SolidBrush(pen.Color))
                         g.DrawString(text_to_draw.Text, font, b, e.Location);
@@ -199,8 +222,8 @@ namespace FirstGraphics
 
         private void button_new_Click(object sender, EventArgs e)
         {
-            form2.ActiveControl = form2.numericUpDown1;
-            if (form2.ShowDialog() == DialogResult.OK)
+            newImageForm.ActiveControl = newImageForm.numericUpDown1;
+            if (newImageForm.ShowDialog() == DialogResult.OK)
             {
                 saveFileDialog1.FileName = "";
                 Text = "Image Editor";
@@ -397,6 +420,11 @@ namespace FirstGraphics
         }
 
         #endregion
+
+        private void Main_form_Load(object sender, EventArgs e)
+        {
+            EnableDoubleBuffering();
+        }
 
     }
 }

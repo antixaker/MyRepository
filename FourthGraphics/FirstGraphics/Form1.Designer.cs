@@ -180,7 +180,7 @@
             0,
             0,
             0});
-            this.line_thickness_UpDown.Name = "numericUpDown1";
+            this.line_thickness_UpDown.Name = "line_thickness_UpDown";
             this.line_thickness_UpDown.Size = new System.Drawing.Size(100, 20);
             this.line_thickness_UpDown.TabIndex = 8;
             this.line_thickness_UpDown.Value = new decimal(new int[] {
@@ -277,7 +277,7 @@
             // 
             this.transparent_mode.AutoSize = true;
             this.transparent_mode.Location = new System.Drawing.Point(325, 282);
-            this.transparent_mode.Name = "checkBox1";
+            this.transparent_mode.Name = "transparent_mode";
             this.transparent_mode.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.transparent_mode.Size = new System.Drawing.Size(86, 17);
             this.transparent_mode.TabIndex = 12;
@@ -297,7 +297,7 @@
             // text_to_draw
             // 
             this.text_to_draw.Location = new System.Drawing.Point(219, 307);
-            this.text_to_draw.Name = "textBox1";
+            this.text_to_draw.Name = "text_to_draw";
             this.text_to_draw.Size = new System.Drawing.Size(100, 20);
             this.text_to_draw.TabIndex = 14;
             this.text_to_draw.Text = "Example";
@@ -331,7 +331,7 @@
             "3",
             "4"});
             this.type_line_comboBox.Location = new System.Drawing.Point(419, 279);
-            this.type_line_comboBox.Name = "comboBox1";
+            this.type_line_comboBox.Name = "type_line_comboBox";
             this.type_line_comboBox.Size = new System.Drawing.Size(107, 21);
             this.type_line_comboBox.TabIndex = 16;
             this.type_line_comboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.type_line_comboBox_DrawItem);
@@ -365,6 +365,7 @@
             this.Name = "Main_form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Image Editor";
+            this.Load += new System.EventHandler(this.Main_form_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_form_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
