@@ -32,30 +32,30 @@
             this.button_open = new System.Windows.Forms.Button();
             this.button_save = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.draw_area = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.button_clear = new System.Windows.Forms.Button();
+            this.line_color = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.fill_color = new System.Windows.Forms.Label();
+            this.figure_mode = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.button_font = new System.Windows.Forms.Button();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.draw_area)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -94,23 +94,23 @@
             // 
             this.panel1.AutoScroll = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.draw_area);
             this.panel1.Location = new System.Drawing.Point(115, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 259);
             this.panel1.TabIndex = 3;
             // 
-            // pictureBox1
+            // draw_area
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(97, 78);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            this.draw_area.Location = new System.Drawing.Point(0, 0);
+            this.draw_area.Name = "pictureBox1";
+            this.draw_area.Size = new System.Drawing.Size(97, 78);
+            this.draw_area.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.draw_area.TabIndex = 0;
+            this.draw_area.TabStop = false;
+            this.draw_area.MouseDown += new System.Windows.Forms.MouseEventHandler(this.draw_area_MouseDown);
+            this.draw_area.MouseMove += new System.Windows.Forms.MouseEventHandler(this.draw_area_MouseMove);
+            this.draw_area.MouseUp += new System.Windows.Forms.MouseEventHandler(this.draw_area_MouseUp);
             // 
             // openFileDialog1
             // 
@@ -132,26 +132,26 @@
             this.label1.Text = "X,Y: 0,0";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // button_clear
             // 
-            this.button1.Location = new System.Drawing.Point(12, 117);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "&Clear";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button_clear.Location = new System.Drawing.Point(12, 117);
+            this.button_clear.Name = "button_clear";
+            this.button_clear.Size = new System.Drawing.Size(87, 23);
+            this.button_clear.TabIndex = 5;
+            this.button_clear.Text = "&Clear";
+            this.button_clear.UseVisualStyleBackColor = true;
+            this.button_clear.Click += new System.EventHandler(this.button_clear_Click);
             // 
-            // label2
+            // line_color
             // 
-            this.label2.BackColor = System.Drawing.Color.Black;
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.Location = new System.Drawing.Point(115, 279);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 40);
-            this.label2.TabIndex = 6;
-            this.label2.BackColorChanged += new System.EventHandler(this.label2_BackColorChanged);
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.line_color.BackColor = System.Drawing.Color.Black;
+            this.line_color.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.line_color.Location = new System.Drawing.Point(115, 279);
+            this.line_color.Name = "label2";
+            this.line_color.Size = new System.Drawing.Size(40, 40);
+            this.line_color.TabIndex = 6;
+            this.line_color.BackColorChanged += new System.EventHandler(this.line_color_BackColorChanged);
+            this.line_color.Click += new System.EventHandler(this.line_color_Click);
             // 
             // label3
             // 
@@ -203,6 +203,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mode";
             // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(12, 100);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(46, 17);
+            this.radioButton4.TabIndex = 3;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "&Text";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
@@ -239,27 +251,27 @@
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
-            // label4
+            // fill_color
             // 
-            this.label4.BackColor = System.Drawing.Color.White;
-            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label4.Location = new System.Drawing.Point(129, 292);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 40);
-            this.label4.TabIndex = 10;
-            this.label4.BackColorChanged += new System.EventHandler(this.label4_BackColorChanged);
-            this.label4.Click += new System.EventHandler(this.label2_Click);
+            this.fill_color.BackColor = System.Drawing.Color.White;
+            this.fill_color.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fill_color.Location = new System.Drawing.Point(129, 292);
+            this.fill_color.Name = "label4";
+            this.fill_color.Size = new System.Drawing.Size(40, 40);
+            this.fill_color.TabIndex = 10;
+            this.fill_color.BackColorChanged += new System.EventHandler(this.fill_color_BackColorChanged);
+            this.fill_color.Click += new System.EventHandler(this.line_color_Click);
             // 
-            // label5
+            // figure_mode
             // 
-            this.label5.Location = new System.Drawing.Point(12, 279);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(87, 47);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Transp";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label5.Paint += new System.Windows.Forms.PaintEventHandler(this.label5_Paint);
-            this.label5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label5_MouseDown);
+            this.figure_mode.Location = new System.Drawing.Point(12, 279);
+            this.figure_mode.Name = "label5";
+            this.figure_mode.Size = new System.Drawing.Size(87, 47);
+            this.figure_mode.TabIndex = 11;
+            this.figure_mode.Text = "Transp";
+            this.figure_mode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.figure_mode.Paint += new System.Windows.Forms.PaintEventHandler(this.figure_mode_Paint);
+            this.figure_mode.MouseDown += new System.Windows.Forms.MouseEventHandler(this.figure_mode_MouseDown);
             // 
             // checkBox1
             // 
@@ -272,18 +284,6 @@
             this.checkBox1.Text = ":Transparent";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(12, 100);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(46, 17);
-            this.radioButton4.TabIndex = 3;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "&Text";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // label6
             // 
@@ -303,15 +303,15 @@
             this.textBox1.Text = "Example";
             this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
             // 
-            // button2
+            // button_font
             // 
-            this.button2.Location = new System.Drawing.Point(325, 304);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(85, 23);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "Font";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button_font.Location = new System.Drawing.Point(325, 304);
+            this.button_font.Name = "button2";
+            this.button_font.Size = new System.Drawing.Size(85, 23);
+            this.button_font.TabIndex = 15;
+            this.button_font.Text = "Font";
+            this.button_font.UseVisualStyleBackColor = true;
+            this.button_font.Click += new System.EventHandler(this.button_font_Click);
             // 
             // fontDialog1
             // 
@@ -343,22 +343,22 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(539, 337);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button_font);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.figure_mode);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.line_color);
+            this.Controls.Add(this.button_clear);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button_save);
             this.Controls.Add(this.button_open);
             this.Controls.Add(this.button_new);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.fill_color);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -368,7 +368,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.draw_area)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -383,26 +383,26 @@
         private System.Windows.Forms.Button button_open;
         private System.Windows.Forms.Button button_save;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox draw_area;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button_clear;
+        private System.Windows.Forms.Label line_color;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label fill_color;
         private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label figure_mode;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button_font;
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.ComboBox comboBox1;
 

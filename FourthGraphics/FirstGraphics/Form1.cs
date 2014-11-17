@@ -14,6 +14,8 @@ namespace FirstGraphics
 {
     public partial class Form1 : Form
     {
+        #region Variables
+
         Form2 form2 = new Form2();
         Pen pen = new Pen(Color.Black);
         Point startPt;
@@ -26,9 +28,15 @@ namespace FirstGraphics
         Bitmap oldImage;
         Font font;
 
+        #endregion
+
         public Form1()
         {
             InitializeComponent();
+
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.DoubleBuffer, true);
+
             AddOwnedForm(form2);
             openFileDialog1.InitialDirectory = saveFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
             form2.numericUpDown1.Value = panel1.ClientSize.Width;
@@ -36,24 +44,65 @@ namespace FirstGraphics
             form2.button1_Click(this, null);
             pen.StartCap = pen.EndCap = LineCap.Round;
             pen.Alignment = PenAlignment.Inset;
-            oldImage = new Bitmap(pictureBox1.Image);
+            oldImage = new Bitmap(draw_area.Image);
             font = Font.Clone() as Font;
             comboBox1.SelectedIndex = 0;
             this.DoubleBuffered = true;
+            EnableDoubleBuffering();
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.UserPaint |
+                          ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.ResizeRedraw, true);
         }
+
+        #region Misc
+
+        public void EnableDoubleBuffering()
+        {
+            // Set the value of the double-buffering style bits to true.
+            this.SetStyle(ControlStyles.DoubleBuffer |
+               ControlStyles.UserPaint |
+               ControlStyles.AllPaintingInWmPaint,
+               true);
+            this.UpdateStyles();
+        }
+
+        Color InvertMeAColour(Color ColourToInvert)
+        {
+            const int RGBMAX = 255;
+
+            return Color.FromArgb(RGBMAX - ColourToInvert.R,
+              RGBMAX - ColourToInvert.G, RGBMAX - ColourToInvert.B);
+        }
+
+        #endregion
+
+        #region Painting
 
         private void ReversibleDraw()
         {
-            Point p1 = pictureBox1.PointToScreen(startPt),
-                p2 = pictureBox1.PointToScreen(movePt);
+
+            Point p1 = draw_area.PointToScreen(startPt),
+                p2 = draw_area.PointToScreen(movePt);
+            //p2 = pt;
             if (mode == 1)
+            {
+                //Graphics g = Graphics.FromImage(draw_area.Image);
+                //Pen pen = new Pen(Color.Black);
+                //g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                //g.DrawLine(pen, p1, p2);
+                //draw_area.Refresh();
+                //pen.Dispose();
+                //g.Dispose();
                 ControlPaint.DrawReversibleLine(p1, p2, Color.Black);
+            }
             else
                 ControlPaint.DrawReversibleFrame(PtToRect(p1, p2), Color.Black, (FrameStyle)((figureMode + 1) % 2));
         }
 
         private void DrawFigure(Rectangle r, Graphics g)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             switch (figureMode)
             {
                 case 0:
@@ -91,8 +140,89 @@ namespace FirstGraphics
         private void UpdateOldImage()
         {
             oldImage.Dispose();
-            oldImage = new Bitmap(pictureBox1.Image);
+            oldImage = new Bitmap(draw_area.Image);
         }
+       
+        private void draw_area_MouseMove(object sender, MouseEventArgs e)
+        {
+            label1.Text = string.Format("X,Y:{0},{1}", e.X, e.Y);
+            if (startPt == nullPt)
+                return;
+            if (e.Button == MouseButtons.Left)
+                switch (mode)
+                {
+                    case 0:
+                        Graphics g = Graphics.FromImage(draw_area.Image);
+                        g.DrawLine(pen, startPt, e.Location);
+                        g.Dispose();
+                        startPt = e.Location;
+                        draw_area.Invalidate();
+                        break;
+                    case 1:
+                    //ReversibleDraw();
+                    //movePt = e.Location;
+                    //ReversibleDraw();
+                    //break;
+                    case 2:
+                        //EnableDoubleBuffering();
+                        ReversibleDraw();
+                        movePt = e.Location;
+                        //movePt = new Point(e.X, e.Y);
+                        equalSize = Control.ModifierKeys == Keys.Control;
+                        ReversibleDraw();
+                        //draw_area.Invalidate();
+                        //draw_area.Refresh();
+                        break;
+                }
+        }
+
+        private void draw_area_MouseDown(object sender, MouseEventArgs e)
+        {
+            movePt = startPt = e.Location;
+            UpdateOldImage();
+            if (Control.ModifierKeys == Keys.Alt)
+            {
+                Color c = (draw_area.Image as Bitmap).GetPixel(e.X, e.Y);
+                if (e.Button == MouseButtons.Left)
+                    line_color.BackColor = c;
+                else
+                    fill_color.BackColor = c;
+            }
+            else
+                if (mode == 3)
+                {
+                    Graphics g = Graphics.FromImage(draw_area.Image);
+                    using (SolidBrush b = new SolidBrush(pen.Color))
+                        g.DrawString(textBox1.Text, font, b, e.Location);
+                    g.Dispose();
+                    draw_area.Invalidate();
+                }
+        }
+
+        private void draw_area_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (startPt == nullPt)
+                return;
+            if (mode >= 1)
+            {
+                Graphics g = Graphics.FromImage(draw_area.Image);
+                switch (mode)
+                {
+                    case 1:
+                        g.DrawLine(pen, startPt, movePt);
+                        break;
+                    case 2:
+                        DrawFigure(PtToRect(startPt, movePt), g);
+                        break;
+                }
+                g.Dispose();
+                draw_area.Invalidate();
+            }
+        }
+
+        #endregion
+
+        #region Acts with picture
 
         private void button_new_Click(object sender, EventArgs e)
         {
@@ -115,9 +245,9 @@ namespace FirstGraphics
                     Image im = new Bitmap(s);
                     Graphics g = Graphics.FromImage(im);
                     g.Dispose();
-                    if (pictureBox1.Image != null)
-                        pictureBox1.Image.Dispose();
-                    pictureBox1.Image = im;
+                    if (draw_area.Image != null)
+                        draw_area.Image.Dispose();
+                    draw_area.Image = im;
                     UpdateOldImage();
                 }
                 catch (Exception)
@@ -142,81 +272,33 @@ namespace FirstGraphics
                 if (s.ToUpper() == s0.ToUpper())
                 {
                     s0 = Path.GetDirectoryName(s0) + "\\($$##$$).png";
-                    pictureBox1.Image.Save(s0);
-                    pictureBox1.Image.Dispose();
+                    draw_area.Image.Save(s0);
+                    draw_area.Image.Dispose();
                     File.Delete(s);
                     File.Move(s0, s);
-                    pictureBox1.Image = new Bitmap(s);
+                    draw_area.Image = new Bitmap(s);
                 }
                 else
                 {
-                    pictureBox1.Image.Save(s);
+                    draw_area.Image.Save(s);
                     Text = "Image Editor - " + s;
                 }
             }
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            label1.Text = string.Format("X,Y:{0},{1}", e.X, e.Y);
-            if (startPt == nullPt)
-                return;
-            if (e.Button == MouseButtons.Left)
-                switch (mode)
-                {
-                    case 0:
-                        Graphics g = Graphics.FromImage(pictureBox1.Image);
-                        g.DrawLine(pen, startPt, e.Location);
-                        g.Dispose();
-                        startPt = e.Location;
-                        pictureBox1.Invalidate();
-                        break;
-                    case 1:
-                    //ReversibleDraw();
-                    //movePt = e.Location;
-                    //ReversibleDraw();
-                    //break;
-                    case 2:
-                        ReversibleDraw();
-                        movePt = e.Location;
-                        equalSize = Control.ModifierKeys == Keys.Control;
-                        ReversibleDraw();
-                        break;
-                }
-        }
-
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            movePt = startPt = e.Location;
-            UpdateOldImage();
-            if (Control.ModifierKeys == Keys.Alt)
-            {
-                Color c = (pictureBox1.Image as Bitmap).GetPixel(e.X, e.Y);
-                if (e.Button == MouseButtons.Left)
-                    label2.BackColor = c;
-                else
-                    label4.BackColor = c;
-            }
-            else
-                if (mode == 3)
-                {
-                    Graphics g = Graphics.FromImage(pictureBox1.Image);
-                    using (SolidBrush b = new SolidBrush(pen.Color))
-                        g.DrawString(textBox1.Text, font, b, e.Location);
-                    g.Dispose();
-                    pictureBox1.Invalidate();
-                }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void button_clear_Click(object sender, EventArgs e)
         {
             UpdateOldImage();
-            using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+            using (Graphics g = Graphics.FromImage(draw_area.Image))
                 g.Clear(brush.Color);
-            pictureBox1.Invalidate();
+            draw_area.Invalidate();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        #endregion
+
+        #region ColorSelecting
+
+        private void line_color_Click(object sender, EventArgs e)
         {
             Label lb = sender as Label;
             colorDialog1.Color = lb.BackColor;
@@ -224,16 +306,26 @@ namespace FirstGraphics
                 lb.BackColor = colorDialog1.Color;
         }
 
-        private void label2_BackColorChanged(object sender, EventArgs e)
+        private void line_color_BackColorChanged(object sender, EventArgs e)
         {
-            pen.Color = label2.BackColor;
-            label5.Invalidate();
+            pen.Color = line_color.BackColor;
+            figure_mode.Invalidate();
         }
+
+        private void fill_color_BackColorChanged(object sender, EventArgs e)
+        {
+            brush.Color = fill_color.BackColor;
+            figure_mode.Invalidate();
+        }
+
+        #endregion
+
+        #region Drawing settings
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             pen.Width = (int)numericUpDown1.Value;
-            label5.Invalidate();
+            figure_mode.Invalidate();
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -244,59 +336,32 @@ namespace FirstGraphics
             mode = rb.TabIndex;
         }
 
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (startPt == nullPt)
-                return;
-            if (mode >= 1)
-            {
-                Graphics g = Graphics.FromImage(pictureBox1.Image);
-                switch (mode)
-                {
-                    case 1:
-                        g.DrawLine(pen, startPt, movePt);
-                        break;
-                    case 2:
-                        DrawFigure(PtToRect(startPt, movePt), g);
-                        break;
-                }
-                g.Dispose();
-                pictureBox1.Invalidate();
-            }
-        }
-
-        private void label4_BackColorChanged(object sender, EventArgs e)
-        {
-            brush.Color = label4.BackColor;
-            label5.Invalidate();
-        }
-
-        private void label5_Paint(object sender, PaintEventArgs e)
+        private void figure_mode_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            Rectangle r = label5.ClientRectangle;
+            Rectangle r = figure_mode.ClientRectangle;
             r.Width--; r.Height--;
             DrawFigure(r, g);
         }
 
-        private void label5_MouseDown(object sender, MouseEventArgs e)
+        private void figure_mode_MouseDown(object sender, MouseEventArgs e)
         {
             radioButton3.Checked = true;
             figureMode = (figureMode + 1) % 2;
-            label5.Invalidate();
+            figure_mode.Invalidate();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            label5.Invalidate();
+            figure_mode.Invalidate();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
-                pictureBox1.Image.Dispose();
-                pictureBox1.Image = new Bitmap(oldImage);
+                draw_area.Image.Dispose();
+                draw_area.Image = new Bitmap(oldImage);
             }
         }
 
@@ -305,7 +370,7 @@ namespace FirstGraphics
             radioButton4.Checked = true;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button_font_Click(object sender, EventArgs e)
         {
             fontDialog1.Font = font;
             if (fontDialog1.ShowDialog() == DialogResult.OK)
@@ -330,7 +395,10 @@ namespace FirstGraphics
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             pen.DashStyle = (DashStyle)comboBox1.SelectedIndex;
-            label5.Invalidate();
+            figure_mode.Invalidate();
         }
+
+        #endregion
+
     }
 }

@@ -47,7 +47,7 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Width";
             // 
-            // label2
+            // line_color
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(40, 75);
@@ -121,7 +121,7 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // button_font
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Location = new System.Drawing.Point(171, 128);
