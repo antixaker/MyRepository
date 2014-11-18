@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourthGraphics", "FirstGraphics\FourthGraphics.csproj", "{103C9B8F-F7AE-478D-8EF3-9417F6CE336C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourthGraphics", "FourthGraphics\FourthGraphics.csproj", "{103C9B8F-F7AE-478D-8EF3-9417F6CE336C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
