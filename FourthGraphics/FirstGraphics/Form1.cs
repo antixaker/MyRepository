@@ -26,10 +26,12 @@ namespace FirstGraphics
         SolidBrush brush = new SolidBrush(Color.White);
         int figureMode;
         bool equalSize;
-        Bitmap oldImage;
+        Bitmap oldImage,backupImage;
         Font font;
 
         #endregion
+
+        Bitmap bitmap;
 
         public Main_form()
         {
@@ -46,35 +48,34 @@ namespace FirstGraphics
             font = Font.Clone() as Font;
             type_line_comboBox.SelectedIndex = 0;
             this.DoubleBuffered = true;
-            //EnableDoubleBuffering();
-            //this.SuspendLayout();
-            //this.ResumeLayout(true);
         }
 
         #region Painting
 
         //Drawing inverted line or frame on draw_area
         //when pressed left button and mouse is moving
-        private void ReversibleDraw()
-        {
-            //EnableDoubleBuffering();
-            Point p1 = draw_area.PointToScreen(startPt),
-                p2 = draw_area.PointToScreen(movePt);
-            //p2 = pt;
-            if (indexOfRadioButton == 1)
-            {
-                //Graphics g = Graphics.FromImage(draw_area.Image);
-                //Pen pen = new Pen(Color.Black);
-                //g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                //g.DrawLine(pen, p1, p2);
-                //draw_area.Refresh();
-                //pen.Dispose();
-                //g.Dispose();
-                ControlPaint.DrawReversibleLine(p1, p2, Color.Black);
-            }
-            else
-                ControlPaint.DrawReversibleFrame(PtToRect(p1, p2), Color.Black, (FrameStyle)((figureMode + 1) % 2));
-        }
+        //private void ReversibleDraw()
+        //{
+        //    //EnableDoubleBuffering();
+        //    Point p1 = draw_area.PointToScreen(startPt),
+        //        p2 = draw_area.PointToScreen(movePt);
+        //    //p2 = pt;
+        //    if (indexOfRadioButton == 1)
+        //    {
+        //        //Graphics g = Graphics.FromImage(draw_area.Image);
+        //        //Pen pen = new Pen(Color.Black);
+        //        //g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+        //        //g.DrawLine(pen, p1, p2);
+        //        //draw_area.Refresh();
+        //        //pen.Dispose();
+        //        //g.Dispose();
+        //        ControlPaint.DrawReversibleLine(p1, p2, Color.Black);
+        //    }
+        //    else
+        //        ControlPaint.DrawReversibleFrame(PtToRect(p1, p2), Color.Black, (FrameStyle)((figureMode + 1) % 2));
+        //}
+
+
 
         //Drawing figure on draw_area
         private void DrawFigure(Rectangle r, Graphics g)
@@ -138,34 +139,31 @@ namespace FirstGraphics
                         draw_area.Invalidate();
                         break;
                     case 1:
-                    //ReversibleDraw();
-                    //movePt = e.Location;
-                    //ReversibleDraw();
-                    //break;
-                    case 2:
-                        if (false)
-                        {
-                        //EnableDoubleBuffering();
-                        ReversibleDraw();
-                        //draw_area.Refresh();
-
+                        bitmap = new Bitmap(oldImage);
+                        g = Graphics.FromImage(bitmap);
                         movePt = e.Location;
-                        //movePt = new Point(e.X, e.Y);
-                        equalSize = Control.ModifierKeys == Keys.Control;
-                        ReversibleDraw();
-                        //draw_area.Invalidate();
-                        //draw_area.Refresh();
-                        }
-                        //Graphics 
-                        Bitmap b = new Bitmap(draw_area.Width,draw_area.Height);
-                            g = Graphics.FromImage(b);
-                        movePt = e.Location;
-                        g.DrawRectangle(pen,PtToRect(startPt,movePt));// DrawLine(pen, startPt, e.Location);
+                        g.DrawLine(new Pen(InvertMeAColour(draw_area.BackColor)), startPt, movePt);
                         g.Dispose();
-                        draw_area.Image=b;
-                        //startPt = e.Location;
-                        //draw_area.Refresh();
-                        draw_area.Invalidate();
+                        draw_area.Image = bitmap;
+                        break;
+                    case 2:
+                        //if (false)
+                        //{
+                        //    ReversibleDraw();
+                        //    movePt = e.Location;
+                        //    equalSize = Control.ModifierKeys == Keys.Control;
+                        //    ReversibleDraw();
+                        //}
+
+
+                        bitmap = new Bitmap(oldImage);
+                        g = Graphics.FromImage(bitmap);
+                        movePt = e.Location;
+                        //При таком варианте опять появляется мерцание,но цвет рамки при прорисовке инвертируется.Также возникает ошибка при выходе за пределы draw_area указателя мыши
+                        //g.DrawRectangle(new Pen(InvertMeAColour(((Bitmap)draw_area.Image).GetPixel(movePt.X,movePt.Y))),PtToRect(startPt,movePt));
+                        g.DrawRectangle(new Pen(InvertMeAColour(draw_area.BackColor)), PtToRect(startPt, movePt));
+                        g.Dispose();
+                        draw_area.Image = bitmap;
                         break;
                 }
 
@@ -175,6 +173,8 @@ namespace FirstGraphics
         {
             movePt = startPt = e.Location;
             UpdateOldImage();
+            backupImage = new Bitmap(draw_area.Image);
+            //bitmap = (Bitmap)oldImage;
             if (Control.ModifierKeys == Keys.Alt)
             {
                 Color c = (draw_area.Image as Bitmap).GetPixel(e.X, e.Y);
@@ -186,7 +186,7 @@ namespace FirstGraphics
             else
                 if (indexOfRadioButton == 3)
                 {
-                    
+
                     Graphics g = Graphics.FromImage(draw_area.Image);
                     using (SolidBrush b = new SolidBrush(pen.Color))
                         g.DrawString(text_to_draw.Text, font, b, e.Location);
@@ -201,7 +201,7 @@ namespace FirstGraphics
                 return;
             if (indexOfRadioButton >= 1)
             {
-                Graphics g = Graphics.FromImage(draw_area.Image);
+                Graphics g = Graphics.FromImage(draw_area.Image);//draw_area.Image);
                 switch (indexOfRadioButton)
                 {
                     case 1:
@@ -213,6 +213,9 @@ namespace FirstGraphics
                 }
                 g.Dispose();
                 draw_area.Invalidate();
+                //----------------------------------
+
+                oldImage = new Bitmap(draw_area.Image);
             }
         }
 
@@ -284,7 +287,7 @@ namespace FirstGraphics
 
         private void button_clear_Click(object sender, EventArgs e)
         {
-            UpdateOldImage();
+            backupImage = new Bitmap(draw_area.Image);
             using (Graphics g = Graphics.FromImage(draw_area.Image))
                 g.Clear(brush.Color);
             draw_area.Invalidate();
@@ -357,7 +360,7 @@ namespace FirstGraphics
             if (e.KeyCode == Keys.Escape)
             {
                 draw_area.Image.Dispose();
-                draw_area.Image = new Bitmap(oldImage);
+                draw_area.Image = new Bitmap(backupImage);
             }
         }
 
