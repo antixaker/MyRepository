@@ -26,7 +26,7 @@ namespace FirstGraphics
         SolidBrush brush = new SolidBrush(Color.White);
         int figureMode;
         bool equalSize;
-        Bitmap oldImage,backupImage;
+        Bitmap oldImage, backupImage;
         Font font;
 
         #endregion
@@ -147,21 +147,19 @@ namespace FirstGraphics
                         draw_area.Image = bitmap;
                         break;
                     case 2:
-                        //if (false)
-                        //{
-                        //    ReversibleDraw();
-                        //    movePt = e.Location;
-                        //    equalSize = Control.ModifierKeys == Keys.Control;
-                        //    ReversibleDraw();
-                        //}
-
-
+                        equalSize = Control.ModifierKeys == Keys.Control;
                         bitmap = new Bitmap(oldImage);
                         g = Graphics.FromImage(bitmap);
                         movePt = e.Location;
+
                         //При таком варианте опять появляется мерцание,но цвет рамки при прорисовке инвертируется.Также возникает ошибка при выходе за пределы draw_area указателя мыши
                         //g.DrawRectangle(new Pen(InvertMeAColour(((Bitmap)draw_area.Image).GetPixel(movePt.X,movePt.Y))),PtToRect(startPt,movePt));
-                        g.DrawRectangle(new Pen(InvertMeAColour(draw_area.BackColor)), PtToRect(startPt, movePt));
+
+                        Rectangle rect = PtToRect(startPt, movePt);
+                        if (transparent_mode.Checked)
+                            DrawFigure(rect, g);
+                        else
+                            DrawFigure(rect, g);
                         g.Dispose();
                         draw_area.Image = bitmap;
                         break;
@@ -174,7 +172,6 @@ namespace FirstGraphics
             movePt = startPt = e.Location;
             UpdateOldImage();
             backupImage = new Bitmap(draw_area.Image);
-            //bitmap = (Bitmap)oldImage;
             if (Control.ModifierKeys == Keys.Alt)
             {
                 Color c = (draw_area.Image as Bitmap).GetPixel(e.X, e.Y);
@@ -201,7 +198,7 @@ namespace FirstGraphics
                 return;
             if (indexOfRadioButton >= 1)
             {
-                Graphics g = Graphics.FromImage(draw_area.Image);//draw_area.Image);
+                Graphics g = Graphics.FromImage(draw_area.Image);
                 switch (indexOfRadioButton)
                 {
                     case 1:
